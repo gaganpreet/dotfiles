@@ -45,6 +45,8 @@ alias pc="killall -9 plugin-container"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
+alias rsync="rsync -aP"
+alias pyserv="python -m SimpleHTTPServer 8005"
 
 # Bind alt+y to cd -
 bindkey -s '\ey' "cd -\n"
@@ -59,5 +61,7 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
+
+eval $(perl -I/home/gagan/perl5/lib/perl5 -Mlocal::lib)
 
 fortune
