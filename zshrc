@@ -31,7 +31,7 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 function alarm()
 {
-    sleep $1 && mplayer /home/gagan/alarm.mp3 -loop 0
+    sleep $1 && mplayer $HOME/alarm.mp3 -loop 0
 }
 
 function random_st()
@@ -46,7 +46,21 @@ alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
-alias pyserv="python -m SimpleHTTPServer 8005"
+alias pyserv1="python -m SimpleHTTPServer 8001"
+alias pyserv2="python -m SimpleHTTPServer 8002"
+alias pyserv3="python -m SimpleHTTPServer 8003"
+# Some common git commands as aliases
+alias gta="git add"
+alias gtc="git commit"
+alias gtd="git diff"
+alias gts="git status"
+
+## Some conditional aliases
+# Better df: http://projects.gw-computing.net/projects/dfc/repository
+type dfc > /dev/null && alias df="dfc" 
+# Better grep: http://betterthangrep.com/install/
+type ack > /dev/null && alias grep="ack" && alias agrep="/bin/grep --color=auto"
+type htop > /dev/null && alias top="htop" 
 
 # Bind alt+y to cd -
 bindkey -s '\ey' "cd -\n"
@@ -62,6 +76,6 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
 
-eval $(perl -I/home/gagan/perl5/lib/perl5 -Mlocal::lib)
+eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
 
 fortune
