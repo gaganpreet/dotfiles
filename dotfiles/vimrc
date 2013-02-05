@@ -1,0 +1,32 @@
+" Indentation related
+set tabstop=4 " How many spaces for a tab
+set expandtab " Expand tab to spaces
+set shiftwidth=4
+set softtabstop=4
+set autoindent
+set smartindent
+
+" View related
+set cursorline " Highlight cursor line
+set number " Line numbers
+set showmatch " Match brackets
+
+" Search related
+set incsearch " Incremental search
+set hlsearch " Highlight search
+set ignorecase
+set smartcase " Ignore ignorecase when uppercase characters are present
+
+" Navigation related
+set scrolloff=3 " Minimum number of lines to show below/above the cursor
+
+" Shortcuts
+set pastetoggle=<F2>
+
+filetype plugin indent on
+syntax on
+
+" Persistent undo
+set undofile
+set undolevels=1000
+set undoreload=1000
