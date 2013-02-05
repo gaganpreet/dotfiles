@@ -34,21 +34,12 @@ function alarm()
     sleep $1 && mplayer $HOME/alarm.mp3 -loop 0
 }
 
-function random_st()
-{
-    cd "/media/6/TV/Star Trek TNG - Complete" && smplayer "$(ls **/*avi | sort -R | head -1)"
-}
-
-alias rst="random_st"
 alias grep="grep --color=auto"
-alias pc="killall -9 plugin-container"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
-alias pyserv1="python -m SimpleHTTPServer 8001"
-alias pyserv2="python -m SimpleHTTPServer 8002"
-alias pyserv3="python -m SimpleHTTPServer 8003"
+alias pyserv="python -m SimpleHTTPServer 8001"
 # Some common git commands as aliases
 alias gta="git add"
 alias gtc="git commit"
@@ -72,6 +63,8 @@ setopt no_nomatch
 
 export EDITOR="vim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
+
+source /usr/local/bin/virtualenvwrapper.sh
 
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
