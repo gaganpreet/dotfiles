@@ -40,11 +40,13 @@ alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
 alias pyserv="python -m SimpleHTTPServer 8001"
+alias imfl="./configure && make && make install" # I'm feeling lucky
 # Some common git commands as aliases
 alias gta="git add"
 alias gtc="git commit"
 alias gtd="git diff"
 alias gts="git status"
+
 
 ## Some conditional aliases
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
@@ -69,6 +71,8 @@ source /usr/local/bin/virtualenvwrapper.sh
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
 
-eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+# Source .zshrc in all shells at USR2 signal
+trap "source ~/.zshrc && rehash" USR2
+alias rez="pkill -usr2 zsh"
 
 fortune
