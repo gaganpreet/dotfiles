@@ -1,3 +1,10 @@
+set nocompatible
+filetype off
+
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
 " Indentation related
 set tabstop=4 " How many spaces for a tab
 set expandtab " Expand tab to spaces
@@ -8,8 +15,8 @@ set smartindent
 
 " View related
 set cursorline " Highlight cursor line
-set number " Line numbers
 set showmatch " Match brackets
+syntax on
 
 " Search related
 set incsearch " Incremental search
@@ -23,10 +30,13 @@ set scrolloff=3 " Minimum number of lines to show below/above the cursor
 " Shortcuts
 set pastetoggle=<F2>
 
-filetype plugin indent on
-syntax on
 
 " Persistent undo
 set undofile
 set undolevels=1000
 set undoreload=1000
+
+" Plugins
+Bundle 'davidhalter/jedi-vim'
+
+filetype plugin indent on
