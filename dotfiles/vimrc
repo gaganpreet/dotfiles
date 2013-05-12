@@ -38,5 +38,7 @@ set undoreload=1000
 
 " Plugins
 Bundle 'davidhalter/jedi-vim'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'kien/ctrlp.vim'
 
 filetype plugin indent on
