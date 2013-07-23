@@ -36,9 +36,27 @@ set undofile
 set undolevels=1000
 set undoreload=1000
 
-" Plugins
+" Fold baby fold
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+""" Plugins 
+" Python autocomplete
 Bundle 'davidhalter/jedi-vim'
+
+" Modified lines since last commit in gutter
 Bundle 'airblade/vim-gitgutter'
+
+" Ctrl-P to browse files
 Bundle 'kien/ctrlp.vim'
+
+" Syntax checking for vim
+Bundle "scrooloose/syntastic"
+
+" Faster jumping around
+Bundle "Lokaltog/vim-easymotion"
+let g:EasyMotion_leader_key = '<Leader>'
 
 filetype plugin indent on
