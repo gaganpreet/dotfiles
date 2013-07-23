@@ -34,22 +34,26 @@ function alarm()
     sleep $1 && mplayer $HOME/alarm.mp3 -loop 0
 }
 
+# Git ignore generate
+function gi() 
+{
+    curl http://gitignore.io/api/$@;
+}
+
 alias grep="grep --color=auto"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
 alias imfl="./configure && make && make install" # I'm feeling lucky
-# Some common git commands as aliases
-alias gta="git add"
-alias gtc="git commit"
-alias gtd="git diff"
-alias gts="git status"
 
 # Some useful python utils
 # I found a nice list here: http://ominian.com/2011/02/27/python-batteries-included/
 alias pyserv="python -m SimpleHTTPServer 8001"
 alias jsont="python -m json.tool"
+
+# Switch to 3g when internet is down
+alias wanswitch='ssh root@192.168.1.1 "sh /tmp/switch.sh"'
 
 ## Some conditional aliases
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
@@ -57,6 +61,7 @@ type dfc > /dev/null && alias df="dfc"
 # Better grep: http://betterthangrep.com/install/
 type ack > /dev/null && alias grep="ack" && alias agrep="/bin/grep --color=auto"
 type htop > /dev/null && alias top="htop" 
+type colordiff > /dev/null && alias diff="colordiff -W 300" 
 
 # Bind alt+y to cd -
 bindkey -s '\ey' "cd -\n"
@@ -70,7 +75,7 @@ export EDITOR="vim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PATH=$HOME/firefox:$PATH
 
-source /usr/local/bin/virtualenvwrapper.sh
+source /usr/bin/virtualenvwrapper.sh
 
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
