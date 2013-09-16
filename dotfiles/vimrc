@@ -6,16 +6,14 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " Indentation related
-set tabstop=4 " How many spaces for a tab
+set tabstop=4
 set expandtab " Expand tab to spaces
 set shiftwidth=4
 set softtabstop=4
 set autoindent
-set smartindent
 
 " View related
-set cursorline " Highlight cursor line
-set showmatch " Match brackets
+"set cursorline " Highlight cursor line set showmatch " Match brackets
 syntax on
 
 " Search related
@@ -58,5 +56,8 @@ Bundle "scrooloose/syntastic"
 " Faster jumping around
 Bundle "Lokaltog/vim-easymotion"
 let g:EasyMotion_leader_key = '<Leader>'
+
+" vim-tmux-navigator
+Bundle "christoomey/vim-tmux-navigator"
 
 filetype plugin indent on
