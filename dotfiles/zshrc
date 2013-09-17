@@ -40,6 +40,20 @@ function gi()
     curl http://gitignore.io/api/$@;
 }
 
+# Check mv if it's being done in a git directory
+function check_mv()
+{
+    git status > /dev/null 2>&1
+    if (( ! $? ))
+    then
+        echo "You're in a git directory, did you mean to use git mv?"
+        return
+    fi
+    mv $@
+}
+alias mv="check_mv"
+alias amv="mv"
+
 alias grep="grep --color=auto"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
