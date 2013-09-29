@@ -61,3 +61,6 @@ let g:EasyMotion_leader_key = '<Leader>'
 Bundle "christoomey/vim-tmux-navigator"
 
 filetype plugin indent on
+Bundle "groenewege/vim-less"
+"nnoremap ,m :w <BAR> !lessc % > %:p:r.css<CR><space>
+au BufNewFile,BufRead *.less set filetype=less
