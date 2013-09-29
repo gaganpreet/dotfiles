@@ -34,8 +34,22 @@ function alarm()
     sleep $1 && mplayer $HOME/alarm.mp3 -loop 0
 }
 
+function sum()
+{
+    awk 'BEGIN {sum=0}
+              {sum += $0}
+         END {print(sum)}'
+}
+
+function avg()
+{
+    awk 'BEGIN {sum=0; count=0}
+              {sum += $0; count += 1}
+         END {print(sum/count)}'
+}
+
 # Git ignore generate
-function gi() 
+function gi()
 {
     curl http://gitignore.io/api/$@;
 }
@@ -71,11 +85,11 @@ alias wanswitch='ssh root@192.168.1.1 "sh /tmp/switch.sh"'
 
 ## Some conditional aliases
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
-type dfc > /dev/null && alias df="dfc" 
+type dfc > /dev/null && alias df="dfc"
 # Better grep: http://betterthangrep.com/install/
 type ack > /dev/null && alias grep="ack" && alias agrep="/bin/grep --color=auto"
-type htop > /dev/null && alias top="htop" 
-type colordiff > /dev/null && alias diff="colordiff -W 300" 
+type htop > /dev/null && alias top="htop"
+type colordiff > /dev/null && alias diff="colordiff -W 300"
 
 # Bind alt+y to cd -
 bindkey -s '\ey' "cd -\n"
