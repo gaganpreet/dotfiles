@@ -2,8 +2,8 @@ set nocompatible
 filetype off
 
 " Vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " Indentation related
 set tabstop=4
@@ -42,7 +42,9 @@ set foldlevel=1         "this is just what i use
 
 """ Plugins 
 " Python autocomplete
-Bundle 'davidhalter/jedi-vim'
+Bundle 'Valloric/YouCompleteMe'
+
+Bundle 'scrooloose/nerdtree'
 
 " Modified lines since last commit in gutter
 Bundle 'airblade/vim-gitgutter'
@@ -60,7 +62,48 @@ let g:EasyMotion_leader_key = '<Leader>'
 " vim-tmux-navigator
 Bundle "christoomey/vim-tmux-navigator"
 
-filetype plugin indent on
 Bundle "groenewege/vim-less"
+
+call vundle#end()
+filetype plugin indent on
 "nnoremap ,m :w <BAR> !lessc % > %:p:r.css<CR><space>
 au BufNewFile,BufRead *.less set filetype=less
+
+autocmd FileType nerdtree setlocal nocursorcolumn
+
+let g:path_to_matcher = "/usr/local/bin/matcher"
+
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
+
+let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+
+function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
+
+  " Create a cache file if not yet exists
+  let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
+  if !( filereadable(cachefile) && a:items == readfile(cachefile) )
+    call writefile(a:items, cachefile)
+  endif
+  if !filereadable(cachefile)
+    return []
+  endif
+
+  " a:mmode is currently ignored. In the future, we should probably do
+  " something about that. the matcher behaves like "full-line".
+  let cmd = g:path_to_matcher.' --limit '.a:limit.' --manifest '.cachefile.' '
+  if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
+    let cmd = cmd.'--no-dotfiles '
+  endif
+  let cmd = cmd.a:str
+
+  return split(system(cmd), "\n")
+
+endfunction
+
+
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
+let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_quiet_messages = { "type": "style" }
+
+nmap <leader>ne :NERDTreeToggle<cr>
