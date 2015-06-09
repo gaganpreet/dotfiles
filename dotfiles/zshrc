@@ -1,32 +1,14 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="afowler"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(django git github pip python vundle virtualenvwrapper)
-
-source $ZSH/oh-my-zsh.sh
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
 # Customize to your needs...
 function alarm()
@@ -51,7 +33,7 @@ function avg()
 # Git ignore generate
 function gi()
 {
-    curl http://gitignore.io/api/$@;
+    curl https://www.gitignore.io/api/$@;
 }
 
 # Check mv if it's being done in a git directory
@@ -63,10 +45,10 @@ function check_mv()
         echo "You're in a git directory, did you mean to use git mv?"
         return
     fi
-    mv $@
+    /bin/mv $@
 }
 alias mv="check_mv"
-alias amv="mv"
+alias amv="/bin/mv"
 
 alias grep="grep --color=auto"
 alias bc="bc -l"
@@ -74,6 +56,11 @@ alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
 alias imfl="./configure && make && make install" # I'm feeling lucky
+
+alias gst="git status"
+alias gd="git diff"
+alias gc="git commit --verbose"
+alias ga="git add"
 
 # Some useful python utils
 # I found a nice list here: http://ominian.com/2011/02/27/python-batteries-included/
@@ -87,7 +74,6 @@ alias wanswitch='ssh root@192.168.1.1 "sh /tmp/switch.sh"'
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
 type dfc > /dev/null && alias df="dfc"
 # Better grep: http://betterthangrep.com/install/
-type ack > /dev/null && alias grep="ack" && alias agrep="/bin/grep --color=auto"
 type htop > /dev/null && alias top="htop"
 type colordiff > /dev/null && alias diff="colordiff -W 300"
 
@@ -101,7 +87,9 @@ setopt no_nomatch
 
 export EDITOR="vim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
-export PATH=$HOME/firefox:$PATH
+
+DEVPATHS="$HOME/.npm/bin:$HOME/tmg/jaws-katy/node_modules/grunt-cli/bin:/usr/local/heroku/bin"
+export PATH="$HOME/firefox:$PATH:$DEVPATHS"
 
 source /usr/bin/virtualenvwrapper.sh
 
