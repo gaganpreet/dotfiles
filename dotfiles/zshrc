@@ -36,20 +36,6 @@ function gi()
     curl https://www.gitignore.io/api/$@;
 }
 
-# Check mv if it's being done in a git directory
-function check_mv()
-{
-    git status > /dev/null 2>&1
-    if (( ! $? ))
-    then
-        echo "You're in a git directory, did you mean to use git mv?"
-        return
-    fi
-    /bin/mv $@
-}
-alias mv="check_mv"
-alias amv="/bin/mv"
-
 alias grep="grep --color=auto"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
@@ -66,9 +52,6 @@ alias ga="git add"
 # I found a nice list here: http://ominian.com/2011/02/27/python-batteries-included/
 alias pyserv="python -m SimpleHTTPServer 8001"
 alias jsont="python -m json.tool"
-
-# Switch to 3g when internet is down
-alias wanswitch='ssh root@192.168.1.1 "sh /tmp/switch.sh"'
 
 ## Some conditional aliases
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
@@ -88,10 +71,10 @@ setopt no_nomatch
 export EDITOR="vim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
-DEVPATHS="$HOME/.npm/bin:$HOME/tmg/jaws-katy/node_modules/grunt-cli/bin:/usr/local/heroku/bin"
-export PATH="$HOME/firefox:$PATH:$DEVPATHS"
+export PATH="/usr/local/bin/:$HOME/firefox:$PATH:/usr/local/go/bin"
 
 source /usr/bin/virtualenvwrapper.sh
+source $HOME/.localzshrc
 
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
@@ -101,3 +84,4 @@ trap "source ~/.zshrc && rehash" USR2
 alias rez="pkill -usr2 zsh"
 
 fortune
+eval "$(direnv hook zsh)"
