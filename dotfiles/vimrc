@@ -63,7 +63,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'airblade/vim-gitgutter'
 
 " Ctrl-P to browse files
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 
 " Syntax checking for vim
 Bundle "scrooloose/syntastic"
@@ -81,6 +81,12 @@ Bundle "Xuyuanp/nerdtree-git-plugin"
 
 Bundle "mxw/vim-jsx"
 
+Bundle "tpope/vim-fugitive"
+
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+set t_Co=256 " Powerline doesn't show colours on my terminal without this
+set laststatus=2 " Powerline doesn't show up without this for me
+
 call vundle#end()
 filetype plugin indent on
 "nnoremap ,m :w <BAR> !lessc % > %:p:r.css<CR><space>
@@ -88,35 +94,7 @@ au BufNewFile,BufRead *.less set filetype=less
 
 autocmd FileType nerdtree setlocal nocursorcolumn
 
-let g:path_to_matcher = "/usr/local/bin/matcher"
-
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
-
-let g:ctrlp_match_func = { 'match': 'GoodMatch' }
-
-function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
-
-  " Create a cache file if not yet exists
-  let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
-  if !( filereadable(cachefile) && a:items == readfile(cachefile) )
-    call writefile(a:items, cachefile)
-  endif
-  if !filereadable(cachefile)
-    return []
-  endif
-
-  " a:mmode is currently ignored. In the future, we should probably do
-  " something about that. the matcher behaves like "full-line".
-  let cmd = g:path_to_matcher.' --limit '.a:limit.' --manifest '.cachefile.' '
-  if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
-    let cmd = cmd.'--no-dotfiles '
-  endif
-  let cmd = cmd.a:str
-
-  return split(system(cmd), "\n")
-
-endfunction
-
 
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 
