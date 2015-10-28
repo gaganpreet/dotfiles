@@ -86,6 +86,7 @@ Bundle "tpope/vim-fugitive"
 Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 set t_Co=256 " Powerline doesn't show colours on my terminal without this
 set laststatus=2 " Powerline doesn't show up without this for me
+set noshowmode
 
 call vundle#end()
 filetype plugin indent on
