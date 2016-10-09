@@ -22,6 +22,10 @@ set autoindent
 au FileType html setl sw=2 sts=2 ts=2 et
 au FileType htmldjango setl sw=2 sts=2 ts=2 et
 au FileType javascript setl sw=2 sts=2 ts=2 et
+au BufNewFile,BufRead *.py set textwidth=99
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
 
 " View related
 "set cursorline " Highlight cursor line set showmatch " Match brackets
