@@ -114,6 +114,7 @@ call neomake#configure#automake('rw', 1000)
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>tt :TagbarToggle<CR>
+nmap <leader>ak :Ack <cword><CR>
 nnoremap <c-p> :FZF<cr>
 nnoremap <Tab> :lnext<CR>
 nnoremap <S-Tab>: lprev<CR>
