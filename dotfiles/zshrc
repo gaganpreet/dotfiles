@@ -49,7 +49,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
-plugins=(adb aws battery bower celery emoji emoji-clock gitfast github gulp heroku man nmap npm pip postgres rsync screen sudo suse virtualenvwrapper)
+plugins=(adb battery emoji gitfast man nmap npm pip rsync screen sudo virtualenvwrapper fzf-zsh)
 
 
 # Customize to your needs...
@@ -100,6 +100,7 @@ alias jsont="python -m json.tool"
 type dfc > /dev/null && alias df="dfc"
 # Better grep: http://betterthangrep.com/install/
 type htop > /dev/null && alias top="htop"
+type exa > /dev/null && alias ka="exa"
 type colordiff > /dev/null && alias diff="colordiff -W 300"
 
 # Bind alt+y to cd -
@@ -112,8 +113,9 @@ setopt no_nomatch
 
 export EDITOR="vim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
-
-export PATH="/usr/local/bin/:$HOME/firefox:$PATH:/usr/local/go/bin"
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export PATH="/usr/local/bin/:$HOME/firefox:$PATH:/usr/local/go/bin:$HOME/.yarn/bin/"
 
 source /usr/bin/virtualenvwrapper.sh
 source $HOME/.localzshrc
@@ -126,5 +128,4 @@ trap "source ~/.zshrc && rehash" USR2
 alias rez="pkill -usr2 zsh"
 
 fortune
-eval "$(direnv hook zsh)"
 source $ZSH/oh-my-zsh.sh
