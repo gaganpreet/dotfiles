@@ -69,7 +69,6 @@ Plug 'srcery-colors/srcery-vim'
 " For func argument completion
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
-let g:deoplete#enable_at_startup = 1
 let g:neosnippet#enable_completed_snippet = 1
 
 "inoremap <silent> <expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
@@ -97,46 +96,17 @@ Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 "Plug 'mxw/vim-jsx'
 Plug 'Vimjas/vim-python-pep8-indent'
 
-" Plug 'zxqfl/tabnine-vim'
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'make release',
-    \ }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+Plug 'zxqfl/tabnine-vim'
 
 Plug 'junegunn/fzf'
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {}
-            "\ 'javascript': ['/usr/bin/javascript-typescript-stdio']
-            "\ }
-if executable('javascript-typescript-stdio')
-  let g:LanguageClient_serverCommands.javascript = ['/usr/bin/javascript-typescript-stdio', '-t', '-l', '/tmp/javascript-typescript-studio.log']
-  " Use LanguageServer for omnifunc completion
-  autocmd FileType javascript setlocal omnifunc=LanguageClient#complete completefunc=LanguageClient#complete
-else
-  echo "javascript-typescript-stdio not installed!\n"
-  :cq
-endif
 
-
-Plug 'Shougo/denite.nvim'
-
-Plug 'Shougo/echodoc.vim'
 Plug 'prettier/vim-prettier'
 Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
-Plug 'altercation/vim-colors-solarized'
 
 Plug 'mileszs/ack.vim'
-if executable('rg')
-    let g:ackprg = 'rg'
+if executable('ag')
+    let g:ackprg = 'ag'
 endif
 
 Plug 'vim-airline/vim-airline'
@@ -146,6 +116,8 @@ Plug 'prettier/vim-prettier', {
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 
 Plug 'ambv/black'
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 let g:black_linelength=79
 set noshowmode
 
