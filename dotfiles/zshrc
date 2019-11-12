@@ -78,6 +78,12 @@ function gi()
     curl https://www.gitignore.io/api/$@;
 }
 
+function is_image_corrupt()
+{
+    identify -regard-warnings -verbose $1 > /dev/null 2>&1
+    echo $?
+}
+
 alias grep="grep --color=auto"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
