@@ -56,33 +56,40 @@ set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
 """ Plugins 
+""" Language plugins
 Plug 'davidhalter/jedi-vim'
-Plug 'scrooloose/nerdtree'
-Plug 'airblade/vim-gitgutter'
-Plug 'Lokaltog/vim-easymotion'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
-Plug 'tommcdo/vim-fubitive'
-Plug 'tpope/vim-rhubarb'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'junegunn/fzf'
-Plug 'w0rp/ale'
-Plug 'majutsushi/tagbar'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'mileszs/ack.vim'
-Plug 'SkyLeach/pudb.vim'
-Plug 'vim-airline/vim-airline'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
-Plug 'ambv/black'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-Plug 'vim-vdebug/vdebug'
+
+" Utility
+Plug 'Lokaltog/vim-easymotion'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'tommcdo/vim-fubitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'junegunn/fzf'
+Plug 'mileszs/ack.vim'
+Plug 'vim-airline/vim-airline'
+
+" Debugging and linters
+Plug 'SkyLeach/pudb.vim'
+Plug 'w0rp/ale'
+Plug 'ambv/black'  " replace with ale?
+Plug 'vim-vdebug/vdebug'
+
+" Others
+Plug 'majutsushi/tagbar'
+Plug 'airblade/vim-gitgutter'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 set noshowmode
 
 call plug#end()
