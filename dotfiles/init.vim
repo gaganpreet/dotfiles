@@ -1,6 +1,7 @@
 set encoding=utf-8
 
 " Figure out the system Python for Neovim.
+let g:python_host_prog=substitute(system("which python3"), "\n", '', 'g')
 let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
 
@@ -101,8 +102,11 @@ Plug 'junegunn/fzf'
 Plug 'prettier/vim-prettier'
 Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 Plug 'mileszs/ack.vim'
+
+Plug 'SkyLeach/pudb.vim'
 if executable('ag')
     let g:ackprg = 'ag'
 endif
@@ -116,7 +120,8 @@ Plug 'prettier/vim-prettier', {
 Plug 'ambv/black'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-let g:black_linelength=79
+Plug 'vim-vdebug/vdebug'
+Plug 'preservim/nerdcommenter'
 set noshowmode
 
 call plug#end()
@@ -147,12 +152,12 @@ map <leader>cl :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"
 let g:jsx_ext_required = 0
 "let g:ycm_enable_diagnostic_highlighting = 1
 "let g:ycm_enable_diagnostic_signs = 1
-let g:python_host_prog='/usr/bin/python3'
 let b:ale_fixers = ['prettier', 'eslint']
 let g:ale_linters = {'javascript': ['eslint', 'flow']}                                                                                                                                   
 "let g:ale_lint_on_text_changed = 'never'
 "let g:neomake_javascript_enabled_makers = ['eslint']
 let g:prettier#exec_cmd_async = 1
+let NERDTreeIgnore = ['\.pyc$']
 "call neomake#configure#automake('rw', 1000)
 "call deoplete#enable()
 "call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
@@ -165,6 +170,13 @@ nmap <leader>ak :Ack <cword><CR>
 nnoremap <c-p> :FZF<cr>
 nnoremap <S-Tab>: lprev<CR>
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+nnoremap <silent> pudb :let a='from pudb.remote import set_trace; set_trace(host="0.0.0.0", port=6899, term_size=(160, 48))'\|put=a<cr>
+
+" Copy file name
+nmap ,cfn :let @+=expand("%")<CR>
+" Copy file path to clipboard
+nmap ,cfp :let @+=expand("%:p")<CR>
 
 set splitbelow
 set splitright
