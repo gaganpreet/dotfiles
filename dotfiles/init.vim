@@ -96,8 +96,6 @@ Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 "Plug 'mxw/vim-jsx'
 Plug 'Vimjas/vim-python-pep8-indent'
 
-Plug 'zxqfl/tabnine-vim'
-
 Plug 'junegunn/fzf'
 
 Plug 'prettier/vim-prettier'
