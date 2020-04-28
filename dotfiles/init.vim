@@ -57,7 +57,7 @@ set foldlevel=1         "this is just what i use
 
 """ Plugins 
 """ Language plugins
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
@@ -80,7 +80,7 @@ Plug 'tmhedberg/SimpylFold'
 
 " Debugging and linters
 Plug 'SkyLeach/pudb.vim'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'ambv/black'  " replace with ale?
 Plug 'vim-vdebug/vdebug'
 
@@ -185,6 +185,15 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+autocmd FileType python let b:coc_root_patterns = ['pyproject.toml']
 "" End coc.nvim config
 
 " Copy file name
