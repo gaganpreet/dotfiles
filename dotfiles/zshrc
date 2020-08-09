@@ -1,57 +1,18 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# Colour aliases
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
+export LESS=-R
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="afowler"
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-
-plugins=(adb battery emoji gitfast man nmap npm pip rsync screen sudo virtualenvwrapper fzf-zsh poetry)
-
-
+#
 # Customize to your needs...
 function alarm()
 {
@@ -72,12 +33,6 @@ function avg()
          END {print(sum/count)}'
 }
 
-# Git ignore generate
-function gi()
-{
-    curl https://www.gitignore.io/api/$@;
-}
-
 function is_image_corrupt()
 {
     identify -regard-warnings -verbose $1 > /dev/null 2>&1
@@ -91,16 +46,6 @@ alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
 alias imfl="./configure && make && make install" # I'm feeling lucky
 
-alias gst="git status"
-alias gd="git diff"
-alias gc="git commit --verbose"
-alias ga="git add"
-
-# Some useful python utils
-# I found a nice list here: http://ominian.com/2011/02/27/python-batteries-included/
-alias pyserv="python -m SimpleHTTPServer 8001"
-alias jsont="python -m json.tool"
-
 ## Some conditional aliases
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
 type dfc > /dev/null && alias df="dfc"
@@ -109,22 +54,13 @@ type htop > /dev/null && alias top="htop"
 type exa > /dev/null && alias ka="exa"
 type colordiff > /dev/null && alias diff="colordiff -W 300"
 
-# Bind alt+y to cd -
-bindkey -s '\ey' "cd -\n"
-# Bind alt+r to ls -trl
-bindkey -s '\er' "ls -trl\n"
-
-# If wildcard doesn't expand, pass it on to the command
-setopt no_nomatch
-
 export EDITOR="vim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export PATH="/usr/local/bin/:$HOME/firefox:$PATH:/usr/local/go/bin:$HOME/.yarn/bin/"
-
 source /usr/bin/virtualenvwrapper.sh
-source $HOME/.localzshrc
+ls $HOME/.localzshrc 2>/dev/null && source $HOME/.localzshrc
 
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
@@ -133,5 +69,18 @@ zstyle ":completion:*:commands" rehash 1
 trap "source ~/.zshrc && rehash" USR2
 alias rez="pkill -usr2 zsh"
 
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=500000
+SAVEHIST=500000
+setopt INC_APPEND_HISTORY # append into history file
+setopt extended_history       # record timestamp of command in HISTFILE
+
 fortune
-source $ZSH/oh-my-zsh.sh
+
+alias antigenbundle="antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh"
+export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+export SPACESHIP_EXIT_CODE_SHOW=true
+export SPACESHIP_EXEC_TIME_SHOW=true
+export SPACESHIP_TIME_SHOW=true
+source ~/.zsh_plugins.sh

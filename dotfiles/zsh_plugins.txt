@@ -1,0 +1,57 @@
+caarlos0/jvm
+djui/alias-tips
+# comments are supported like this
+caarlos0/zsh-mkc
+zsh-users/zsh-completions
+caarlos0/zsh-open-github-pr
+
+# empty lines are skipped
+
+
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+
+# annotations are also allowed:
+robbyrussell/oh-my-zsh
+robbyrussell/oh-my-zsh path:plugins/adb
+robbyrussell/oh-my-zsh path:plugins/archlinux
+robbyrussell/oh-my-zsh path:plugins/autojump  # Look into fasd as next step
+robbyrussell/oh-my-zsh path:plugins/aws
+robbyrussell/oh-my-zsh path:plugins/battery
+robbyrussell/oh-my-zsh path:plugins/cargo
+robbyrussell/oh-my-zsh path:plugins/celery
+robbyrussell/oh-my-zsh path:plugins/colorize
+robbyrussell/oh-my-zsh path:plugins/command-not-found
+robbyrussell/oh-my-zsh path:plugins/common-aliases
+robbyrussell/oh-my-zsh path:plugins/django
+robbyrussell/oh-my-zsh path:plugins/docker-compose
+robbyrussell/oh-my-zsh path:plugins/docker
+robbyrussell/oh-my-zsh path:plugins/emoji
+robbyrussell/oh-my-zsh path:plugins/fd
+robbyrussell/oh-my-zsh path:plugins/fzf
+robbyrussell/oh-my-zsh path:plugins/gcloud
+robbyrussell/oh-my-zsh path:plugins/git-extras
+robbyrussell/oh-my-zsh path:plugins/git
+robbyrussell/oh-my-zsh path:plugins/gitfast
+robbyrussell/oh-my-zsh path:plugins/gitignore
+robbyrussell/oh-my-zsh path:plugins/golang
+robbyrussell/oh-my-zsh path:plugins/helm
+robbyrussell/oh-my-zsh path:plugins/history
+robbyrussell/oh-my-zsh path:plugins/httpie
+robbyrussell/oh-my-zsh path:plugins/jira
+robbyrussell/oh-my-zsh path:plugins/kubectl
+robbyrussell/oh-my-zsh path:plugins/nmap
+robbyrussell/oh-my-zsh path:plugins/node
+robbyrussell/oh-my-zsh path:plugins/npm
+robbyrussell/oh-my-zsh path:plugins/pip
+robbyrussell/oh-my-zsh path:plugins/redis-cli
+robbyrussell/oh-my-zsh path:plugins/ripgrep
+robbyrussell/oh-my-zsh path:plugins/themes
+robbyrussell/oh-my-zsh path:plugins/tmux
+robbyrussell/oh-my-zsh path:plugins/transfer
+robbyrussell/oh-my-zsh path:plugins/virtualenvwrapper
+robbyrussell/oh-my-zsh path:plugins/virtualenv
+robbyrussell/oh-my-zsh path:plugins/yarn
+
+denysdovhan/spaceship-prompt
+
