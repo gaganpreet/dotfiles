@@ -53,8 +53,9 @@ type dfc > /dev/null && alias df="dfc"
 type htop > /dev/null && alias top="htop"
 type exa > /dev/null && alias ka="exa"
 type colordiff > /dev/null && alias diff="colordiff -W 300"
+type nvim > /dev/null && alias vim=nvim
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
