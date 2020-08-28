@@ -1,19 +1,3 @@
-# Colour aliases
-alias diff='diff --color=auto'
-alias grep='grep --color=auto'
-alias ip='ip -color=auto'
-alias ls='ls --color=auto'
-export LESS=-R
-export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
-export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
-export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
-export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
-
-#
-# Customize to your needs...
 function alarm()
 {
     sleep $1 && mplayer $HOME/alarm.mp3 -loop 0
@@ -39,12 +23,24 @@ function is_image_corrupt()
     echo $?
 }
 
+export LESS=-R
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
 alias grep="grep --color=auto"
 alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
-alias imfl="./configure && make && make install" # I'm feeling lucky
 
 ## Some conditional aliases
 # Better df: http://projects.gw-computing.net/projects/dfc/repository
@@ -57,11 +53,12 @@ type nvim > /dev/null && alias vim=nvim
 
 export EDITOR="nvim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+export GOPATH="/home/gagan/projects/go-src/"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export PATH="/usr/local/bin/:$HOME/firefox:$PATH:/usr/local/go/bin:$HOME/.yarn/bin/"
+export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/.yarn/bin/"
 source /usr/bin/virtualenvwrapper.sh
-ls $HOME/.localzshrc 2>/dev/null && source $HOME/.localzshrc
+ls $HOME/.localzshrc >/dev/null 2>/dev/null && source $HOME/.localzshrc
 
 # Rehash completion index to pick up new commands automatically
 zstyle ":completion:*:commands" rehash 1
@@ -79,9 +76,8 @@ setopt extended_history       # record timestamp of command in HISTFILE
 
 fortune
 
-alias antigenbundle="antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh"
+alias antibodybundle="antibody bundle < ~/dotfiles/dotfiles/zsh_plugins.txt > ~/.zsh_plugins.sh"
 export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
-export SPACESHIP_EXIT_CODE_SHOW=true
-export SPACESHIP_EXEC_TIME_SHOW=true
-export SPACESHIP_TIME_SHOW=true
+eval "$(starship init zsh)"
 source ~/.zsh_plugins.sh
+eval $(keychain --eval --agents ssh id_rsa)
