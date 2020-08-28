@@ -42,15 +42,6 @@ alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
 
-## Some conditional aliases
-# Better df: http://projects.gw-computing.net/projects/dfc/repository
-type dfc > /dev/null && alias df="dfc"
-# Better grep: http://betterthangrep.com/install/
-type htop > /dev/null && alias top="htop"
-type exa > /dev/null && alias ka="exa"
-type colordiff > /dev/null && alias diff="colordiff -W 300"
-type nvim > /dev/null && alias vim=nvim
-
 export EDITOR="nvim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
@@ -81,3 +72,22 @@ export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrus
 eval "$(starship init zsh)"
 source ~/.zsh_plugins.sh
 eval $(keychain --eval --agents ssh id_rsa)
+
+function better_alias {
+    type $2 > /dev/null
+    if (( $? != 0 ))
+    then
+        echo "$2 not installed, using default $1"
+    else
+        alias -g "$1"="$2"
+    fi
+}
+
+## Some conditional aliases
+better_alias ba better_alias
+ba df dfc
+ba cat bat
+ba ls exa
+ba du dust
+ba top ytop
+ba vim nvim
