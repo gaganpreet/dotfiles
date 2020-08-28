@@ -91,6 +91,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
+" Plug 'stsewd/fzf-checkout.vim'
+Plug 'vimlab/split-term.vim'
+Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-rhubarb'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'scrooloose/nerdtree'
@@ -128,13 +131,25 @@ let g:ale_linters = {'javascript': ['eslint', 'flow']}
 let g:prettier#exec_cmd_async = 1
 let NERDTreeIgnore = ['\.pyc$']
 
-nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
+command! -bang -nargs=?  GFiles call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+nnoremap <c-p> :GFiles<cr>
+
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
 nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFind<cr>
 nmap <leader>tt :TagbarToggle<CR>
-nmap <leader>ak :Ack <cword><CR>
-command! -bang -nargs=?  GFiles call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-nnoremap <c-p> :GFiles<cr>
+nmap <leader>rf :Rg <c-r><c-w><cr>
+nmap <leader>rg :RG <CR>
 nnoremap <S-Tab>: lprev<CR>
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> pudb :let a='from pudb.remote import set_trace; set_trace(host="0.0.0.0", port=6899, term_size=(160, 48))'\|put=a<cr>
@@ -288,6 +303,9 @@ autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeIm
 nmap ,cfn :let @+=expand("%")<CR>
 " Copy file path to clipboard
 nmap ,cfp :let @+=expand("%:p")<CR>
+
+let g:poetv_auto_activate=1
+let g:poetv_executables = ['poetry']
 
 set splitbelow
 set splitright
