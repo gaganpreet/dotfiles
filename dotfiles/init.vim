@@ -8,6 +8,7 @@ let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
 set nocompatible
 set bs=2
 set hidden
+set mouse=a
 filetype off
 
 call plug#begin('~/.local/share/nvim/plugged')
