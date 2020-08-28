@@ -53,5 +53,4 @@ robbyrussell/oh-my-zsh path:plugins/virtualenvwrapper
 robbyrussell/oh-my-zsh path:plugins/virtualenv
 robbyrussell/oh-my-zsh path:plugins/yarn
 
-denysdovhan/spaceship-prompt
-
+wfxr/forgit
