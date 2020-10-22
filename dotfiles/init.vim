@@ -8,7 +8,6 @@ let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
 set nocompatible
 set bs=2
 set hidden
-set mouse=a
 filetype off
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -59,7 +58,9 @@ set foldlevel=1         "this is just what i use
 """ Plugins 
 """ Language plugins
 " Plug 'davidhalter/jedi-vim'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+
+" https://github.com/neoclide/coc.nvim/issues/2330
+Plug 'neoclide/coc.nvim', {'tag': 'v0.0.78'}  
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -67,10 +68,10 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+Plug 'sillybun/vim-repl'
 
 " Utility
 Plug 'Lokaltog/vim-easymotion'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -83,7 +84,7 @@ Plug 'tmhedberg/SimpylFold'
 " Debugging and linters
 Plug 'SkyLeach/pudb.vim'
 " Plug 'w0rp/ale'
-Plug 'psf/black', { 'branch': 'stable' }
+" Plug 'psf/black', { 'branch': 'stable' }
 Plug 'vim-vdebug/vdebug'
 
 " Others
@@ -92,8 +93,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
-" Plug 'stsewd/fzf-checkout.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'vimlab/split-term.vim'
+let g:disable_key_mappings=1
 Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-rhubarb'
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -103,8 +105,15 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'christoomey/vim-system-copy'
 Plug 'petobens/poet-v'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 set noshowmode
 
+if has('nvim')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+  autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+endif
 
 call plug#end()
 filetype plugin indent on
@@ -132,9 +141,10 @@ let g:ale_linters = {'javascript': ['eslint', 'flow']}
 let g:prettier#exec_cmd_async = 1
 let NERDTreeIgnore = ['\.pyc$']
 
-
-command! -bang -nargs=?  GFiles call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-nnoremap <c-p> :GFiles<cr>
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd --type f --hidden --follow --exclude .git -X stat --printf="%Y\t%n\n"')
+" inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd --type f --hidden --follow --exclude .git --exec stat --printf="%Y\t%n\n" \| sort -n \| awk "{print $2, (systime() - $1) / 86400, \"days ago\"}"')
+command! -bang -nargs=?  Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+nnoremap <c-p> :Files<cr>
 
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
@@ -149,8 +159,14 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFind<cr>
 nmap <leader>tt :TagbarToggle<CR>
-nmap <leader>rf :Rg <c-r><c-w><cr>
-nmap <leader>rg :RG <CR>
+nmap <leader>q :Rg <c-r><c-w><cr>
+nmap <leader>r :RG <CR>
+noremap <Leader>bf :Buffers<CR>
+noremap <Leader>bl :BLines<CR>
+noremap <c-s> :RG<CR>
+noremap <c-_> :GBranches<CR>
+noremap <Leader>h :History<CR>
+
 nnoremap <S-Tab>: lprev<CR>
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> pudb :let a='from pudb.remote import set_trace; set_trace(host="0.0.0.0", port=6899, term_size=(160, 48))'\|put=a<cr>
@@ -310,3 +326,37 @@ let g:poetv_executables = ['poetry']
 
 set splitbelow
 set splitright
+set signcolumn=auto:2 " https://github.com/neoclide/coc.nvim/wiki/F.A.Q#sign-of-diagnostics-not-shown
+
+" https://vim.fandom.com/wiki/Shifting_blocks_visually
+vnoremap > >gv
+vnoremap < <gv
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
+inoremap <S-Tab> <C-D>
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+inoremap \gt <Esc>gt
+tnoremap \gt <C-\><C-n>gt
+nnoremap \tt <Esc>:TTerm<CR>
+nnoremap \vt <Esc>:VTerm<CR>
+
+""" Terminal mode mappings
+tnoremap <Esc> <C-\><C-n>
+" Alt+[hjkl] to navigate through windows in insert mode
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+
+" Alt+[hjkl] to navigate through windows in normal mode
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+inoremap <A-h> <C-w>h
+inoremap <A-j> <C-w>j
+inoremap <A-k> <C-w>k
+inoremap <A-l> <C-w>l
