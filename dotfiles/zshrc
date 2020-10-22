@@ -47,7 +47,7 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 export GOPATH="/home/gagan/projects/go-src/"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/.yarn/bin/"
+export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin"
 source /usr/bin/virtualenvwrapper.sh
 ls $HOME/.localzshrc >/dev/null 2>/dev/null && source $HOME/.localzshrc
 
@@ -62,7 +62,8 @@ alias rez="pkill -usr2 zsh"
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=500000
 SAVEHIST=500000
-setopt INC_APPEND_HISTORY # append into history file
+setopt inc_append_history # append into history file
+setopt share_history
 setopt extended_history       # record timestamp of command in HISTFILE
 
 fortune
@@ -79,7 +80,7 @@ function better_alias {
     then
         echo "$2 not installed, using default $1"
     else
-        alias -g "$1"="$2"
+        alias "$1"="$2"
     fi
 }
 
@@ -91,3 +92,5 @@ ba ls exa
 ba du dust
 ba top ytop
 ba vim nvim
+unalias fd
+bindkey \^U backward-kill-line
