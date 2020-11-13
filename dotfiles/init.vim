@@ -19,18 +19,23 @@ set shiftwidth=4
 set softtabstop=4
 set autoindent
 
+set dictionary+=/usr/share/dict/words
+
 au FileType html setl sw=2 sts=2 ts=2 et
 au FileType htmldjango setl sw=2 sts=2 ts=2 et
 au FileType javascript setl sw=2 sts=2 ts=2 et
 au FileType typescript setl sw=2 sts=2 ts=2 et
 au FileType yaml setl sw=2 sts=2 ts=2 et
 au FileType go setl sw=8 sts=8 ts=8 noet
-au BufNewFile,BufRead *.py set textwidth=99
 au BufNewFile,BufRead *.less set filetype=less
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-let g:ale_completion_enabled = 1
 
+" Restore last position
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
 
 " View related
 syntax on
@@ -60,15 +65,16 @@ set foldlevel=1         "this is just what i use
 " Plug 'davidhalter/jedi-vim'
 
 " https://github.com/neoclide/coc.nvim/issues/2330
-Plug 'neoclide/coc.nvim', {'tag': 'v0.0.78'}  
+Plug 'neoclide/coc.nvim'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
-Plug 'Vimjas/vim-python-pep8-indent'
+" Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 Plug 'sillybun/vim-repl'
+Plug 'python-rope/ropevim'
 
 " Utility
 Plug 'Lokaltog/vim-easymotion'
@@ -164,6 +170,7 @@ nmap <leader>r :RG <CR>
 noremap <Leader>bf :Buffers<CR>
 noremap <Leader>bl :BLines<CR>
 noremap <c-s> :RG<CR>
+noremap <c-h> :Tags<CR>
 noremap <c-_> :GBranches<CR>
 noremap <Leader>h :History<CR>
 
@@ -337,13 +344,15 @@ inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-inoremap \gt <Esc>gt
-tnoremap \gt <C-\><C-n>gt
-nnoremap \tt <Esc>:TTerm<CR>
-nnoremap \vt <Esc>:VTerm<CR>
+inoremap <leader>gt <Esc>gt
+tnoremap <leader>gt <C-\><C-n>gt
+nnoremap <leader>tt <Esc>:TTerm<CR>
+nnoremap <leader>vt <Esc>:VTerm<CR>
 
 """ Terminal mode mappings
 tnoremap <Esc> <C-\><C-n>
+" To quit float term with esc
+autocmd FileType fzf tnoremap <buffer> <Esc> <c-c>
 " Alt+[hjkl] to navigate through windows in insert mode
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
