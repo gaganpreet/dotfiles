@@ -93,4 +93,6 @@ ba du dust
 ba top ytop
 ba vim nvim
 unalias fd
+
 bindkey \^U backward-kill-line
+eval "$(direnv hook zsh)"
