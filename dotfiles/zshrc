@@ -72,7 +72,7 @@ alias antibodybundle="antibody bundle < ~/dotfiles/dotfiles/zsh_plugins.txt > ~/
 export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
 eval "$(starship init zsh)"
 source ~/.zsh_plugins.sh
-eval $(keychain --eval --agents ssh id_rsa)
+eval $(keychain --eval --agents ssh id_rsa id_rsa_gitlab_work)
 
 function better_alias {
     type $2 > /dev/null
