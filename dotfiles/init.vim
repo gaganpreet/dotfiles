@@ -17,6 +17,7 @@ set tabstop=4
 set expandtab " Expand tab to spaces
 set shiftwidth=4
 set softtabstop=4
+set mouse=a
 set autoindent
 
 set dictionary+=/usr/share/dict/words
@@ -62,10 +63,11 @@ set foldlevel=1         "this is just what i use
 
 """ Plugins 
 """ Language plugins
-" Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
+let g:jedi#auto_initialization = 0   " Use jedi only for refactoring code
+let g:jedi#rename_command = "<leader>rj"
 
-" https://github.com/neoclide/coc.nvim/issues/2330
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -110,9 +112,11 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'christoomey/vim-system-copy'
-Plug 'petobens/poet-v'
+" Plug 'petobens/poet-v'  # Interferes with Poetry shell
+Plug 'alfredodeza/coveragepy.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+" Plug 'paulkass/jira-vim', { 'do': 'pip install -r requirements.txt' }
 
 set noshowmode
 
