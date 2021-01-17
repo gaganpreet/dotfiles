@@ -1,0 +1,33 @@
+{
+  "python.formatting.provider": "black",
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintUseMinimalCheckers": false,
+
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "go",
+    "javascript",
+    "typescript",
+    "json"
+  ],
+
+  "languageserver": {
+    "sql": {
+      "command": "sql-language-server",
+      "args": ["up", "--method", "stdio", "-d"],
+      "filetypes": ["sql", "mysql"]
+    },
+
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
+    }
+  },
+  "solargraph.diagnostics": true
+}
