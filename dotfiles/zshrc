@@ -41,13 +41,14 @@ alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
+alias grmpull='git pull origin master --rebase --autostash'
+alias gmmpull='git pull origin master --no-rebase'
 
 export EDITOR="nvim"
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 export GOPATH="/home/gagan/projects/go-src/"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin"
 source /usr/bin/virtualenvwrapper.sh
 ls $HOME/.localzshrc >/dev/null 2>/dev/null && source $HOME/.localzshrc
 
@@ -92,7 +93,10 @@ ba ls exa
 ba du dust
 ba top ytop
 ba vim nvim
-unalias fd
 
 bindkey \^U backward-kill-line
 eval "$(direnv hook zsh)"
+
+export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin:$HOME/.poetry/bin"
+export DISABLE_UPDATE_PROMPT=true
+export GTK_USE_PORTAL=1  # Make Firefox use KDE file dialog
