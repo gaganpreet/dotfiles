@@ -4,14 +4,21 @@
   "python.linting.pylintEnabled": true,
   "python.linting.mypyEnabled": true,
   "python.linting.pylintUseMinimalCheckers": false,
+  "tsserver.log": "normal",
+  "typescript.format.enabled": true,
 
   "coc.preferences.formatOnSaveFiletypes": [
     "python",
     "go",
     "javascript",
     "typescript",
-    "json"
+    "json",
+    "vue"
   ],
+
+  "yaml.schemas": {
+      "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/3.0.3/schemas/v3.0/schema.json": "openapi.yaml"
+  },
 
   "languageserver": {
     "sql": {
