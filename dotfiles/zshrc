@@ -1,27 +1,21 @@
-function alarm()
-{
-    sleep $1 && mplayer $HOME/alarm.mp3 -loop 0
-}
+# Rehash completion index to pick up new commands automatically
+zstyle ":completion:*:commands" rehash 1
 
-function sum()
-{
-    awk 'BEGIN {sum=0}
-              {sum += $0}
-         END {print(sum)}'
-}
+# Source .zshrc in all shells at USR2 signal
+trap "source ~/.zshrc && rehash" USR2
 
-function avg()
-{
-    awk 'BEGIN {sum=0; count=0}
-              {sum += $0; count += 1}
-         END {print(sum/count)}'
-}
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=500000
+SAVEHIST=500000
+setopt inc_append_history # append into history file
+setopt share_history
+setopt extended_history       # record timestamp of command in HISTFILE
+bindkey \^U backward-kill-line
 
-function is_image_corrupt()
-{
-    identify -regard-warnings -verbose $1 > /dev/null 2>&1
-    echo $?
-}
+source $HOME/dotfiles/dotfiles/zshrc.d/functions.sh
+source /usr/bin/virtualenvwrapper.sh
+source ~/.zsh_plugins.sh
+ls $HOME/.localzshrc >/dev/null 2>/dev/null && source $HOME/.localzshrc
 
 export LESS=-R
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
@@ -32,6 +26,20 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
+export EDITOR="nvim"
+export PYTHONSTARTUP=$HOME/.pythonrc.py
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+export FZF_DEFAULT_OPTS='--color hl:underline:reverse,hl+:underline:reverse'
+export GOPATH="/home/gagan/projects/go-src/"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+export WORDCHARS='_-'
+
+export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin:$HOME/.poetry/bin"
+export DISABLE_UPDATE_PROMPT=true
+export GTK_USE_PORTAL=1  # Make Firefox use KDE file dialog
+
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -color=auto'
@@ -41,62 +49,20 @@ alias bc="bc -l"
 alias vps="ssh -t gaganpreet.in 'su -'"
 alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
-alias grmpull='git pull origin master --rebase --autostash'
-alias gmmpull='git pull origin master --no-rebase'
-
-export EDITOR="nvim"
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
-export GOPATH="/home/gagan/projects/go-src/"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-source /usr/bin/virtualenvwrapper.sh
-ls $HOME/.localzshrc >/dev/null 2>/dev/null && source $HOME/.localzshrc
-
-# Rehash completion index to pick up new commands automatically
-zstyle ":completion:*:commands" rehash 1
-
-# Source .zshrc in all shells at USR2 signal
-trap "source ~/.zshrc && rehash" USR2
-alias rez="pkill -usr2 zsh"
-
-
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=500000
-SAVEHIST=500000
-setopt inc_append_history # append into history file
-setopt share_history
-setopt extended_history       # record timestamp of command in HISTFILE
-
-fortune
-
 alias antibodybundle="antibody bundle < ~/dotfiles/dotfiles/zsh_plugins.txt > ~/.zsh_plugins.sh"
-export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
-eval "$(starship init zsh)"
-source ~/.zsh_plugins.sh
-eval $(keychain --eval --agents ssh id_rsa id_rsa_gitlab_work)
-
-function better_alias {
-    type $2 > /dev/null
-    if (( $? != 0 ))
-    then
-        echo "$2 not installed, using default $1"
-    else
-        alias "$1"="$2"
-    fi
-}
+alias rez="pkill -usr2 zsh"
 
 ## Some conditional aliases
 better_alias ba better_alias
-ba df dfc
 ba cat bat
 ba ls exa
-ba du dust
 ba top ytop
 ba vim nvim
 
-bindkey \^U backward-kill-line
-eval "$(direnv hook zsh)"
 
-export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin:$HOME/.poetry/bin"
-export DISABLE_UPDATE_PROMPT=true
-export GTK_USE_PORTAL=1  # Make Firefox use KDE file dialog
+eval "$(starship init zsh)"
+eval $(keychain --eval --agents ssh id_rsa)
+eval "$(direnv hook zsh)"
+eval "$(ntfy shell-integration)"
+
+fortune
