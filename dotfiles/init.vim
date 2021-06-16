@@ -159,6 +159,18 @@ function! RipgrepFzf(query, fullscreen)
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+let $FZF_DEFAULT_OPTS = "--bind ctrl-q:select-all+accept "
+
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 nmap <leader>ne :NERDTreeToggle<cr>
@@ -191,7 +203,11 @@ vnoremap <S-Tab> <gv
 inoremap <leader>gt <Esc>gt
 tnoremap <leader>gt <C-\><C-n>gt
 nnoremap <leader>tt <Esc>:TTerm<CR>
+nnoremap <leader>ut <Esc>:Term<CR>
 nnoremap <leader>vt <Esc>:VTerm<CR>
+nnoremap <C-Tab> :bn<CR>
+nnoremap <C-S-Tab> :bp<CR>
+nnoremap <leader>mt :MaximizerToggle<CR>
 
 """ Terminal mode mappings
 tnoremap <Esc> <C-\><C-n>
