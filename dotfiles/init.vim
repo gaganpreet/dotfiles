@@ -45,6 +45,7 @@ au FileType typescript setl sw=2 sts=2 ts=2 et
 au FileType yaml setl sw=2 sts=2 ts=2 et
 au FileType go setl sw=8 sts=8 ts=8 noet
 au BufNewFile,BufRead *.less set filetype=less
+au BufNewFile,BufRead *.kt set filetype=kotlin
 au BufNewFile,BufRead Dockerfile* set filetype=dockerfile
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -95,6 +96,7 @@ Plug 'prettier/vim-prettier', {
 Plug 'sillybun/vim-repl'
 Plug 'python-rope/ropevim'
 Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
+Plug 'udalov/kotlin-vim'
 
 " Utility
 Plug 'justinmk/vim-sneak'
@@ -133,6 +135,8 @@ Plug 'honza/vim-snippets'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'vim-scripts/IndexedSearch'
 Plug 'tpope/vim-surround'
+Plug 'szw/vim-maximizer'
+Plug 'wakatime/vim-wakatime'
 call plug#end()
 filetype plugin indent on
 
