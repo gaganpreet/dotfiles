@@ -1,40 +1,66 @@
 {
-  "python.formatting.provider": "black",
-  "python.linting.flake8Enabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.linting.mypyEnabled": true,
-  "python.linting.pylintUseMinimalCheckers": false,
-  "tsserver.log": "normal",
-  "typescript.format.enabled": true,
-
-  "coc.preferences.formatOnSaveFiletypes": [
-    "python",
-    "go",
-    "javascript",
-    "typescript",
-    "json",
-    "vue"
-  ],
-
-  "yaml.schemas": {
-      "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/3.0.3/schemas/v3.0/schema.json": "openapi.yaml"
-  },
-
-  "languageserver": {
-    "sql": {
-      "command": "sql-language-server",
-      "args": ["up", "--method", "stdio", "-d"],
-      "filetypes": ["sql", "mysql"]
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.pylintUseMinimalCheckers": false,
+    "tsserver.log": "normal",
+    "typescript.format.enabled": true,
+    "vetur.validation.templateProps": true,
+    "vetur.experimental.templateInterpolationService": true,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "python",
+        "go",
+        "javascript",
+        "typescript",
+        "json",
+        "vue"
+    ],
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/3.0.3/schemas/v3.0/schema.json": "openapi.yaml"
     },
-
-    "intelephense": {
-      "command": "intelephense",
-      "args": ["--stdio"],
-      "filetypes": ["php"],
-      "initializationOptions": {
-        "storagePath": "/tmp/intelephense"
-      }
-    }
-  },
-  "solargraph.diagnostics": true
+    "languageserver": {
+        "kotlin": {
+            "command": "kotlin-language-server",
+            "filetypes": [
+                "kotlin"
+            ]
+        },
+        "sql": {
+            "command": "sql-language-server",
+            "args": [
+                "up",
+                "--method",
+                "stdio",
+                "-d"
+            ],
+            "filetypes": [
+                "sql",
+                "mysql"
+            ]
+        },
+        "intelephense": {
+            "command": "intelephense",
+            "args": [
+                "--stdio"
+            ],
+            "filetypes": [
+                "php"
+            ],
+            "initializationOptions": {
+                "storagePath": "/tmp/intelephense"
+            }
+        }
+    },
+    "solargraph.diagnostics": true,
+    "importCost.typescriptExtensions": [
+        "\\.tsx?$",
+        "\\.vue$"
+    ],
+    "importCost.bundleSizeDecoration": "both",
+    "importCost.showCalculatingDecoration": true,
+    "kotlin.languageServer.path": "/usr/bin/kotlin-language-server",
+    "kotlin.languageServer.enabled": true,
+    "kotlin.completion.snippets.enabled": true,
+    "kotlin.trace.server": "verbose"
 }
