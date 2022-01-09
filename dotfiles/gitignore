@@ -21,3 +21,9 @@ tags
 [._]*.un~
 
 .vscode
+
+pyrightconfig.json
+coc-settings.json
+
+# .cruft.json
+.ropeproject

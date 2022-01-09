@@ -108,6 +108,8 @@ Plug 'mileszs/ack.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'machakann/vim-highlightedyank'
+Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
+Plug 'APZelos/blamer.nvim'
 
 " Debugging and linters
 Plug 'SkyLeach/pudb.vim'
@@ -207,6 +209,8 @@ nnoremap <leader>ut <Esc>:Term<CR>
 nnoremap <leader>vt <Esc>:VTerm<CR>
 nnoremap <C-Tab> :bn<CR>
 nnoremap <C-S-Tab> :bp<CR>
+" Search and replace word under cursor
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 nnoremap <leader>mt :MaximizerToggle<CR>
 
 """ Terminal mode mappings
@@ -229,6 +233,10 @@ inoremap <A-h> <C-w>h
 inoremap <A-j> <C-w>j
 inoremap <A-k> <C-w>k
 inoremap <A-l> <C-w>l
+
+let g:blamer_enabled = 1
+let g:blamer_delay = 1000
+let g:blamer_date_format = '%Y/%m/%d %H:%M'
 
 let g:UltiSnipsExpandTrigger="<c-U>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"

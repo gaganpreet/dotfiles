@@ -36,7 +36,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
 export WORDCHARS='_-'
 
-export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin:$HOME/.poetry/bin"
+export PATH="/usr/local/bin/:$PATH:/usr/local/go/bin:$HOME/projects/go-src/bin/:$HOME/.yarn/bin/:$(ruby -e 'puts Gem.user_dir')/bin:$HOME/.poetry/bin:$HOME/.cargo/bin/"
 export DISABLE_UPDATE_PROMPT=true
 export GTK_USE_PORTAL=1  # Make Firefox use KDE file dialog
 
@@ -51,6 +51,7 @@ alias pie="perl -p -i -e"
 alias rsync="rsync -aP"
 alias antibodybundle="antibody bundle < ~/dotfiles/dotfiles/zsh_plugins.txt > ~/.zsh_plugins.sh"
 alias rez="pkill -usr2 zsh"
+alias gcal="gcalcli --calendar 'Gaganpreet Arora'  quick"
 
 ## Some conditional aliases
 better_alias ba better_alias
@@ -66,3 +67,9 @@ eval "$(direnv hook zsh)"
 eval "$(ntfy shell-integration)"
 
 fortune
+
+fpath=($HOME/dotfiles/dotfiles/zshrc.d/fpath $fpath)
+autoload -Uz compinit && compinit -i
+
+
+export PATH="$HOME/.poetry/bin:$PATH"
