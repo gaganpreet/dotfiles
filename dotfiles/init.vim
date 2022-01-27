@@ -110,6 +110,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'machakann/vim-highlightedyank'
 Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'APZelos/blamer.nvim'
+Plug 'github/copilot.vim', {'branch': 'release'}
 
 " Debugging and linters
 Plug 'SkyLeach/pudb.vim'
@@ -139,6 +140,7 @@ Plug 'vim-scripts/IndexedSearch'
 Plug 'tpope/vim-surround'
 Plug 'szw/vim-maximizer'
 Plug 'wakatime/vim-wakatime'
+Plug 'junegunn/goyo.vim'
 call plug#end()
 filetype plugin indent on
 
