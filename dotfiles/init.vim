@@ -176,8 +176,13 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 map <leader>cl :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 
+function! s:list_cmd()
+  let base = fnamemodify(expand('%'), ':h:.:S')
+  return base == '.' ? 'fd -t f' : printf('fd -t f | proximity-sort %s', expand('%'))
+endfunction
+
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd --type f --hidden --follow --exclude .git --exclude swagger-ui.js --exclude swagger-ui-bundle.js --exclude swagger-ui-standalone-preset.js  -X stat --printf="%Y\t%n\n"')
-command! -bang -nargs=?  Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+command! -bang -nargs=?  Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'source': s:list_cmd(), 'options': ['--tiebreak=index', '--layout=reverse', '--info=inline']}), <bang>0)
 nnoremap <c-p> :Files<cr>
 
 function! RipgrepFzf(query, fullscreen)
