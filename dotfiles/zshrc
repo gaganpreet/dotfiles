@@ -5,12 +5,14 @@ zstyle ":completion:*:commands" rehash 1
 trap "source ~/.zshrc && rehash" USR2
 
 HISTFILE="$HOME/.zsh_history"
-HISTSIZE=500000
-SAVEHIST=500000
+HISTSIZE=5000000
+SAVEHIST=5000000
 setopt inc_append_history # append into history file
 setopt share_history
 setopt extended_history       # record timestamp of command in HISTFILE
 bindkey \^U backward-kill-line
+
+export FZF_BASE=/usr/share/fzf
 
 source $HOME/dotfiles/dotfiles/zshrc.d/functions.sh
 source /usr/bin/virtualenvwrapper.sh
@@ -62,9 +64,8 @@ ba vim nvim
 
 
 eval "$(starship init zsh)"
-eval $(keychain --eval --agents ssh id_rsa)
+eval $(keychain --eval --agents ssh id_rsa id_ed25519)
 eval "$(direnv hook zsh)"
-eval "$(ntfy shell-integration)"
 
 fortune
 
@@ -72,4 +73,56 @@ fpath=($HOME/dotfiles/dotfiles/zshrc.d/fpath $fpath)
 autoload -Uz compinit && compinit -i
 
 
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.poetry/bin:$PATH:$HOME/dotfiles/bin"
+
+alias unblocksocialmedia='sudo bash -c "hostctl disable social-hosts && sleep 4m && sudo hostctl enable social-hosts"'
+
+function scale_video() {
+    ffmpeg -i ${1} -vf scale=iw/2:-1  ${1}_scaled.MP4
+}
+
+function change_fps_to_30() {
+    ffmpeg -i ${1} -r 30 ${1}_30.MP4
+}
+
+function video_info() {
+    ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate,duration -of csv=p=0 ${1}
+}
+
+function yay_no_virtualenv() {
+    # Make sure yay commands never run in a virtualenv
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo "Deactivating virtualenv"
+        deactivate
+        yay "$@"
+    else
+        yay "$@"
+    fi
+}
+
+function wdclf() {
+    # docker compose logs tail in a loop when the process restarts
+    while (( 1 ))
+    do
+        dclf -t --tail 5 "$@"
+    done
+}
+
+alias yay=yay_no_virtualenv
+alias file_safe_date="date +%Y-%m-%d_%H-%M-%S"
+
+alias drun='sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $HOME/dockerx:/dockerx'
+
+function geolocatedtz() {
+    TZ="$(curl -s https://ipapi.co/timezone)"
+    echo "Setting timezone to $TZ"
+    timedatectl set-timezone "$TZ"
+}
+
+function q() {
+    sgpt --role polymath "$*"
+}
+
+function to_dutch() {
+     q "translate to Dutch. Do not translate literally but like a native dutch person would say it. Don't be too formal: $*"
+}
