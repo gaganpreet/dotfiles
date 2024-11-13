@@ -72,6 +72,5 @@ function file_extensions_summary {
 }
 
 function poetry_venv {
-    source $(poetry env info --path)/bin/activate
+    source "$(poetry env list --full-path | head -1 | awk '{print $1}')/bin/activate"
 }
-
