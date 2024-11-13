@@ -26,4 +26,8 @@ pyrightconfig.json
 coc-settings.json
 
 # .cruft.json
+*.ropeproject/
 .ropeproject
+pyrightconfig.json
+.hypothesis
+.github_token
