@@ -5,6 +5,8 @@ set hidden
 set noshowmode
 set termguicolors
 filetype off
+set rnu
+autocmd TermOpen * setlocal nornu
 
 " Indentation related
 set tabstop=4
@@ -61,11 +63,11 @@ let g:Hexokinase_highlighters = [ 'backgroundfull' ]
 let g:poetv_auto_activate=1
 let g:poetv_executables = ['poetry']
 let g:EasyMotion_leader_key = '<Leader>'
-let g:airline_theme='base16'
+let g:airline_theme='powerlineish'
 let g:jedi#use_splits_not_buffers = "right"
 let g:jsx_ext_required = 0
 let b:ale_fixers = ['prettier', 'eslint']
-let g:ale_linters = {'javascript': ['eslint', 'flow']}                                                                                                                                   
+let g:ale_linters = {'javascript': ['eslint', 'flow']}
 let g:prettier#exec_cmd_async = 1
 let NERDTreeIgnore = ['\.pyc$']
 
@@ -83,7 +85,7 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-""" Plugins 
+""" Plugins
 """ Language plugins
 Plug 'davidhalter/jedi-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -97,6 +99,10 @@ Plug 'sillybun/vim-repl'
 Plug 'python-rope/ropevim'
 Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'udalov/kotlin-vim'
+Plug 'josa42/vim-monkey-c', {'branch': 'main'}
+Plug 'peterhoeg/vim-qml'
+Plug 'google/vim-jsonnet'
+Plug 'hashivim/vim-terraform'
 
 " Utility
 Plug 'justinmk/vim-sneak'
@@ -110,7 +116,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'machakann/vim-highlightedyank'
 Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'APZelos/blamer.nvim'
-Plug 'github/copilot.vim', {'branch': 'release'}
+" Plug 'github/copilot.vim', {'branch': 'release'}
+Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
 
 " Debugging and linters
 Plug 'SkyLeach/pudb.vim'
@@ -127,11 +134,14 @@ Plug 'vimlab/split-term.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-rhubarb'
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'scrooloose/nerdtree'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'nvim-tree/nvim-web-devicons' " optional
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'christoomey/vim-system-copy'
+" Plug 'christoomey/vim-system-copy'
+" Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'alfredodeza/coveragepy.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -141,6 +151,21 @@ Plug 'tpope/vim-surround'
 Plug 'szw/vim-maximizer'
 Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/goyo.vim'
+Plug 'rhysd/vim-grammarous'
+Plug 'ryanoasis/vim-devicons'
+Plug 'robertbasic/vim-hugo-helper'
+Plug 'pbrisbin/vim-colors-off', {'branch': 'main'}
+Plug 'preservim/vim-colors-pencil'
+Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'hrsh7th/nvim-cmp', {'branch': 'main'} " Optional: For using slash commands and variables in the chat buffer
+Plug 'nvim-telescope/telescope.nvim', " Optional: For using slash commands
+Plug 'stevearc/dressing.nvim' " Optional: Improves `vim.ui.select`
+Plug 'MeanderingProgrammer/render-markdown.nvim', {'branch': 'main'} " Optional: For prettier markdown rendering
+Plug 'olimorris/codecompanion.nvim', {'branch': 'main'}
+let g:pencil_higher_contrast_ui = 1
 call plug#end()
 filetype plugin indent on
 
@@ -151,7 +176,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 map <leader>cl :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd --type f --hidden --follow --exclude .git -X stat --printf="%Y\t%n\n"')
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd --type f --hidden --follow --exclude .git --exclude swagger-ui.js --exclude swagger-ui-bundle.js --exclude swagger-ui-standalone-preset.js  -X stat --printf="%Y\t%n\n"')
 command! -bang -nargs=?  Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 nnoremap <c-p> :Files<cr>
 
@@ -177,8 +202,8 @@ let $FZF_DEFAULT_OPTS = "--bind ctrl-q:select-all+accept "
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-nmap <leader>ne :NERDTreeToggle<cr>
-nmap <leader>nf :NERDTreeFind<cr>
+nmap <leader>ne :NvimTreeToggle<cr>
+nmap <leader>nf :NvimTreeFindFile<cr>
 nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>qr :Rg <c-r><c-w><cr>
 noremap <Leader>bf :Buffers<CR>
@@ -187,6 +212,7 @@ noremap <c-s> :RG<CR>
 noremap <c-h> :Tags<CR>
 noremap <c-_> :GBranches<CR>
 noremap <Leader>hi :History<CR>
+noremap <c-k> :Commands<CR>
 
 nnoremap <S-Tab>: lprev<CR>
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
@@ -219,22 +245,24 @@ nnoremap <leader>mt :MaximizerToggle<CR>
 tnoremap <Esc> <C-\><C-n>
 " To quit float term with esc
 autocmd FileType fzf tnoremap <buffer> <Esc> <c-c>
+
+let g:tmux_navigator_no_mappings = 1
 " Alt+[hjkl] to navigate through windows in insert mode
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
+tnoremap <silent> <A-h> <C-\><C-n>:TmuxNavigateLeft<CR>
+tnoremap <silent> <A-j> <C-\><C-n>:TmuxNavigateDown<CR>
+tnoremap <silent> <A-k> <C-\><C-n>:TmuxNavigateUp<CR>
+tnoremap <silent> <A-l> <C-\><C-n>:TmuxNavigateRight<CR>
 
 " Alt+[hjkl] to navigate through windows in normal mode
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+nnoremap <silent> <A-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <A-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <A-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <A-l> :TmuxNavigateRight<CR>
 
-inoremap <A-h> <C-w>h
-inoremap <A-j> <C-w>j
-inoremap <A-k> <C-w>k
-inoremap <A-l> <C-w>l
+inoremap <silent> <A-h> :TmuxNavigateLeft<CR>
+inoremap <silent> <A-j> :TmuxNavigateDown<CR>
+inoremap <silent> <A-k> :TmuxNavigateUp<CR>
+inoremap <silent> <A-l> :TmuxNavigateRight<CR>
 
 let g:blamer_enabled = 1
 let g:blamer_delay = 1000
@@ -244,5 +272,106 @@ let g:UltiSnipsExpandTrigger="<c-U>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+let g:copilot_filetypes = {'markdown': v:true}
+
+
+" set background=dark
 source $HOME/dotfiles/dotfiles/nvim/coc.vim
 source $HOME/dotfiles/dotfiles/nvim/vimspector.vim
+
+" set clipboard=unnamed
+
+lua <<EOF
+require('tabnine').setup({
+  disable_auto_comment=true,
+  accept_keymap="<Tab>",
+  dismiss_keymap = "<C-]>",
+  debounce_ms = 800,
+  suggestion_color = {gui = "#808080", cterm = 244},
+  exclude_filetypes = {"TelescopePrompt", "NvimTree"},
+  log_file_path = nil, -- absolute path to Tabnine log file
+  -- log_file_path = "/tmp/tabnine/tabnine.log", -- absolute path to Tabnine log file
+})
+
+
+  require("codecompanion").setup({
+    strategies = {
+      chat = {
+        adapter = "ollama",
+      },
+      inline = {
+        adapter = "ollama",
+      },
+      agent = {
+        adapter = "ollama",
+      },
+    },
+    adapters = {
+      ollama = function()
+        return require("codecompanion.adapters").extend("ollama", {
+          name = "mistral-nemo",
+          schema = {
+            model = {
+              default = "mistral-nemo",
+            },
+            num_ctx = {
+              default = 16384,
+            },
+            num_predict = {
+              default = -1,
+            },
+          },
+        })
+      end,
+    },
+  })
+--vim.g.clipboard = {
+--  name = 'OSC 52',
+--  copy = {
+--    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+--    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+--  },
+--  paste = {
+--    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+--    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+--  },
+--}
+
+local function paste()
+  return {
+    vim.fn.split(vim.fn.getreg(""), "\n"),
+    vim.fn.getregtype(""),
+  }
+end
+
+
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = paste,
+    ["*"] = paste,
+  },
+}
+
+vim.opt.clipboard:append { 'unnamed', 'unnamedplus' }
+
+require("nvim-tree").setup({
+  sort = {
+    sorter = "case_sensitive",
+  },
+  view = {
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+
+EOF
