@@ -6,19 +6,17 @@
   "python.linting.pylintUseMinimalCheckers": false,
   "tsserver.log": "normal",
   "typescript.format.enabled": true,
+  "typscript.formatOnSave": true,
   "vetur.validation.templateProps": true,
   "vetur.experimental.templateInterpolationService": true,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "python",
-    "go",
-    "javascript",
-    "typescript",
-    "json",
-    "vue"
-  ],
   "yaml.schemas": {
     "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/3.0.3/schemas/v3.0/schema.json": "openapi.yaml"
   },
+  "json.schemas": [
+    {
+      "https://raw.githubusercontent.com/webpack/webpack/main/schemas/WebpackOptions.json": "webpack.json"
+    }
+  ],
   "languageserver": {
     "kotlin": {
       "command": "kotlin-language-server",
@@ -36,6 +34,16 @@
       "initializationOptions": {
         "storagePath": "/tmp/intelephense"
       }
+    },
+    "clangd": {
+      "command": "clangd",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+    },
+    "rust": {
+      "command": "rust-analyzer",
+      "filetypes": ["rust", "rs"],
+      "rootPatterns": ["Cargo.toml"]
     }
   },
   "solargraph.diagnostics": true,
@@ -45,5 +53,6 @@
   "kotlin.languageServer.path": "/usr/bin/kotlin-language-server",
   "kotlin.languageServer.enabled": true,
   "kotlin.completion.snippets.enabled": true,
-  "kotlin.trace.server": "verbose"
+  "kotlin.trace.server": "verbose",
+  "inlayHint.display": false
 }
